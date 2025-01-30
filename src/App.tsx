@@ -7,6 +7,7 @@ function App() {
   const [userTwoName, setUserTwoName] = useState<string>("")
   const [avatarOne, setAvatarOne] = useState<string>("")
   const [avatarTwo, setAvatarTwo] = useState<string>("")
+  const [winner, setWinner] = useState<string>("")
 
 
   const Github_API = import.meta.env.VITE_GITHUB_API_TOKEN
@@ -30,6 +31,8 @@ function App() {
 
     const pub_repos = obj1.data.public_repos
     const followers = obj1.data.followers
+    const created = obj1.data.id
+    
   }
 
   const userTwo = async () => {
@@ -43,7 +46,7 @@ function App() {
 
     const pub_repos = obj2.data.public_repos
     const followers = obj2.data.followers
-
+    const created = obj2.data.id
 
   }
 useEffect(() => {
@@ -70,7 +73,7 @@ useEffect(() => {
   
   return (
     <>
-      <div className="bg-[url('./image/bgimg.jpg')] bg-cover bg-center h-screen flex text-white text-center">
+      <div className="bg-radial-[at_25%_25%] from-blue-500 to-transparent p-20 bg-cover bg-center h-screen flex text-white text-center">
         <div className='mt-12 bg-transparent h-58 w-full'>
           <div className='h-56 bg-transparent mx-50 flex justify-center items-center'>
             <div className="relative">
