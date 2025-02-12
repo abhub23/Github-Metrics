@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import gitlogo from './image/gitlogo.png';
+import Navbar from './Navbar';
 
 function App() {
   const [userOneName, setUserOneName] = useState<string>('');
@@ -45,6 +46,7 @@ function App() {
     } catch (err) {
       console.log('Error while fetching User one', err);
     }
+  }
 
     const userTwo: Function = async () => {
       try {
@@ -71,12 +73,12 @@ function App() {
         console.log('Error while fetching user two', err);
       }
     };
-  };
+  
 
   useEffect(() => {
     if (!userOneName) return; // Don't fetch if inputs are empty
     const delaySearch = setTimeout(() => {
-      userOne();
+      userOne()
     }, 500); // 1-second delay after user stops typing
 
     return () => {
@@ -87,7 +89,7 @@ function App() {
   useEffect(() => {
     if (!userTwoName) return; // Don't fetch if inputs are empty
     const delaySearch = setTimeout(() => {
-      userTwo();
+      userTwo()
     }, 500); // 1-second delay after user stops typing
 
     return () => {
@@ -95,7 +97,21 @@ function App() {
     };
   }, [userTwoName]);
 
-  const Compare = () => {};
+  const Compare = () => {
+    let userOneScore: number = 0
+    let userTwoScore: number = 0
+
+    let arr1 = [...user1]
+    let arr2 = [...user2]
+
+    arr1[0] > arr1[0]? userOneScore += 1 : userTwoScore += 1
+    arr1[1] > arr1[1]? userOneScore += 1 : userTwoScore += 1
+    arr1[2] > arr1[2]? userOneScore += 1 : userTwoScore += 1
+
+    console.log(userOneScore>userTwoScore ? userOneName:userTwoName)
+  };
+
+  Compare()
 
   return (
     <>
@@ -137,6 +153,7 @@ function App() {
             />
           </div>
         </div>
+        <Navbar/>
       </div>
     </>
   );
