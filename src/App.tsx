@@ -115,8 +115,8 @@ function App() {
 
   return (
     <>
-      <div className="bg-radial-[at_25%_25%] from-blue-500 to-transparent p-20 bg-cover bg-center h-screen flex text-white text-center">
-        <div className="mt-12 bg-transparent h-58 w-full">
+      <div className="bg-radial-[at_25%_25%] from-red-500 to-transparent p-20 bg-cover bg-center h-screen flex text-white text-center">
+        <div className="bg-transparent h-58 w-full">
           <div className="h-56 bg-transparent mx-50 flex justify-center items-center">
             <div className="relative">
               <img className="h-56 pr-36" src={gitlogo} alt="github logo" />
@@ -152,8 +152,15 @@ function App() {
               placeholder="Enter github username"
             />
           </div>
+          <div className='h-20 mt-2 ml-70 mr-70 flex justify-center bg-transparent'>
+                <button className='border-2 bg-black w-40 h-14 cursor-pointer mr-2 rounded-2xl hover:w-41'>
+                  sdcdcsd
+                </button>
+                <button className='border-2 bg-black w-40 h-14 cursor-pointer ml-2 rounded-2xl hover:w-41'>
+                  sdcdcsd
+                </button>
         </div>
-        <Navbar/>
+        </div>
       </div>
     </>
   );
