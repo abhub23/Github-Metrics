@@ -14,11 +14,11 @@ function App() {
 
   const Github_API = import.meta.env.VITE_GITHUB_API_TOKEN;
 
-  const handleUserOne = (e: any) => {
+  const handleUserOne = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserOneName(e.target.value);
   };
 
-  const handleUserTwo = (e: any) => {
+  const handleUserTwo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserTwoName(e.target.value);
   };
 
@@ -119,7 +119,7 @@ function App() {
         <div className="bg-transparent h-58 w-full">
           <div className="h-56 bg-transparent mx-50 flex justify-center items-center">
             <div className="relative">
-              <img className="h-56 pr-36" src={gitlogo} alt="github logo" />
+              <img className="h-56 mr-36 hover:h-58 rounded-full" src={gitlogo} alt="github logo" />
               <img
                 className="h-56 rounded-full absolute top-1/2 left-28 transform -translate-x-1/2 -translate-y-1/2 text-transparent"
                 src={avatarOne}
@@ -128,7 +128,7 @@ function App() {
             </div>
 
             <div className="relative ">
-              <img className="h-56 pl-36" src={gitlogo} alt="github logo" />
+              <img className="h-56 ml-36 hover:h-58" src={gitlogo} alt="github logo" />
               <img
                 className="h-56  rounded-full absolute top-1/2 left-64 transform -translate-x-1/2 -translate-y-1/2 text- text-transparent"
                 src={avatarTwo}
@@ -153,10 +153,11 @@ function App() {
             />
           </div>
           <div className='h-20 mt-2 ml-70 mr-70 flex justify-center bg-transparent'>
-                <button className='border-2 bg-black w-40 h-14 cursor-pointer mr-2 rounded-2xl hover:w-41'>
-                  sdcdcsd
+                <button className='border-1 border-amber-700 bg-black w-40 h-14 cursor-pointer mr-2 rounded-4xl hover:w-41'
+                onClick={() => {setUserOneName("") , setUserTwoName("")}}>
+                  Reset
                 </button>
-                <button className='border-2 bg-black w-40 h-14 cursor-pointer ml-2 rounded-2xl hover:w-41'>
+                <button className='border-1 border-amber-700 bg-black w-40 h-14 cursor-pointer ml-2 rounded-4xl hover:w-41'>
                   sdcdcsd
                 </button>
         </div>
