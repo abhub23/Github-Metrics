@@ -5,23 +5,23 @@ interface InputFields {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-      
-const Input: React.FC<InputFields> = ({ value, onChange }): JSX.Element => {
 
+const Input: React.FC<InputFields> = ({ value, onChange }): JSX.Element => {
   return (
     <StyledWrapper>
       <div className="brutalist-container">
-        <input placeholder="TYPE HERE" 
-        className="brutalist-input smooth-type" 
-        type="text"
-        value={value}
-      onChange={onChange}
-         />
+        <input
+          placeholder="TYPE HERE"
+          className="brutalist-input smooth-type"
+          type="text"
+          value={value}
+          onChange={onChange}
+        />
         <label className="brutalist-label">GITHUB USERNAME</label>
       </div>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .brutalist-container {
@@ -43,7 +43,9 @@ const StyledWrapper = styled.div`
     border-radius: 0;
     outline: none;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 5px 5px 0 #000, 10px 10px 0 #4a90e2;
+    box-shadow:
+      5px 5px 0 #000,
+      10px 10px 0 #4a90e2;
   }
 
   @keyframes glitch {
@@ -68,12 +70,13 @@ const StyledWrapper = styled.div`
   }
 
   .brutalist-input:focus {
-    animation: focus-pulse 4s cubic-bezier(0.25, 0.8, 0.25, 1) infinite,
+    animation:
+      focus-pulse 4s cubic-bezier(0.25, 0.8, 0.25, 1) infinite,
       glitch 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
   }
 
   .brutalist-input:focus::after {
-    content: "";
+    content: '';
     position: absolute;
     top: -2px;
     left: -2px;
@@ -84,7 +87,7 @@ const StyledWrapper = styled.div`
   }
 
   .brutalist-input:focus::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -157,7 +160,7 @@ const StyledWrapper = styled.div`
   }
 
   .smooth-type::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     right: 0;
@@ -204,6 +207,7 @@ const StyledWrapper = styled.div`
     50% {
       border-color: #4a90e2;
     }
-  }`;
+  }
+`;
 
 export default Input;

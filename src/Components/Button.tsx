@@ -1,7 +1,7 @@
 interface Proptype {
   btnName: string;
   color: string;
-  onClick: () => Promise<void> | void
+  onClick: () => Promise<void> | void;
   border?: string;
 }
 
@@ -9,7 +9,7 @@ const Button: React.FC<Proptype> = ({
   btnName,
   color,
   onClick,
-  border
+  border,
 }): JSX.Element => {
   return (
     <button
