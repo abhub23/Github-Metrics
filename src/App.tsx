@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import githublogo from './Components/Images/github-logo.png';
-import Button from './Components/Button';
-import Input from './Components/Input';
-import { div } from 'framer-motion/client';
+import github from './lib/github.png';
+import Button from './components/Button';
+import Input from './components/Input';
+import { Particles } from './components/magicui/particles';
+import { TypewriterEffectSmooth } from './components/ui/typewriter-effect';
+import sweetalert from './helpers/alert';
 
 function App() {
   const [userOneName, setUserOneName] = useState<string>('');
@@ -15,8 +17,6 @@ function App() {
   const [responseData, setResponseData] = useState<string>('');
 
   const Github_API: string = import.meta.env.VITE_GITHUB_API_TOKEN;
-  const Gemini_API: string = import.meta.env.VITE_GEMINI_API_TOKEN;
-  const Gemini_API_URL: string = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${Gemini_API}`;
 
   const handleUserOne = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserOneName(e.target.value);
@@ -50,8 +50,10 @@ function App() {
       it schedules the re-render coz its asynchronous and dont do it immediately
        */
       setUser1((): number[] => {
-        const dataArr: number[] = Object.values(userData).map((value) => Number(value));
-        console.log('User 1 data: ', dataArr); // ✅ Correct Updated Value
+        const dataArr: number[] = Object.values(userData).map((value) =>
+          Number(value)
+        );
+        //console.log('User 1 data: ', dataArr); // ✅ Correct Updated Value
         return dataArr;
       });
     } catch (err) {
@@ -84,9 +86,10 @@ function App() {
       };
 
       setUser2((): number[] => {
-        const dataArr2: number[] = Object.values(userData).map((values) => Number(values)
+        const dataArr2: number[] = Object.values(userData).map((values) =>
+          Number(values)
         );
-        console.log('User 2 data: ', dataArr2);
+        //console.log('User 2 data: ', dataArr2);
         return dataArr2;
       });
     } catch (err) {
@@ -121,52 +124,46 @@ function App() {
     };
   }, [userTwoName]);
 
-  const handleCompare: Function = async (): Promise<void> => {
+  const handleCompare = async (): Promise<void> => {
     if (userOneName && userTwoName) {
       let data1: string = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
       let data2: string = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
-        const response: AxiosResponse = await axios.post(Gemini_API_URL, {
-          contents: [
-            {
-              parts: [
-                {
-                  text: `Compare these two users: ${data1} vs ${data2}. Roast the weaker one so bad that the user should feel ashamed of it and praise the one who have good repositories
-                   and lastly pick a winner. also dont give disclamer or any warning just pure roast. Give the output in about 150-180 words`,
-                },
-              ],
-            },
-          ],
-        });
+        const result: any = await axios.post('http://localhost:3001/api',{
+          data1, data2
+        } );
 
-        const result: string = response.data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
-        setResponseData(result)
-
-      } catch (err: any) {
+        const res = result.data
+        console.log(res)
+        setResponseData(res);
+      } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
           console.error(`The error occured`, err.message);
         }
-        console.error('Error occured in Gemini: ', err);
+        console.error('Error occured in API: ', err);
       }
+    } else {
+      sweetalert();
     }
   };
-  useEffect(() => {
-    console.log(responseData); // Logs after state update
-  }, [responseData]);
 
   return (
-    <>
-      <div className=" bg-[radial-gradient(circle_at_left,_purple_10%,_pink_50%,_yellow_90%)] p-4 bg-cover bg-center h-screen flex text-white">
+    <div className="relative h-screen w-full overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <Particles />
+      </div>
+
+      <div className="relative z-10 p-4 bg-cover bg-center flex">
         <div className="bg-transparent h-56 w-full">
-          <div className="h-56 bg-transparent mx-80 flex justify-center items-center">
+          <div className="h-56 bg-transparent flex justify-center items-center">
             <div className="relative">
               <img
                 className="h-56 mr-36 rounded-full"
-                src={githublogo}
+                src={github}
                 alt="github logo"
               />
               <img
-                className="h-56 rounded-full absolute top-1/2 left-28 transform -translate-x-1/2 -translate-y-1/2 text-transparent"
+                className="h-48 rounded-full absolute top-1/2 left-28 transform -translate-x-1/2 -translate-y-1/2 text-transparent"
                 src={avatarOne}
                 alt="user one image"
               />
@@ -174,12 +171,12 @@ function App() {
 
             <div className="relative ">
               <img
-                className="h-56 ml-36 rounded-full"
-                src={githublogo}
+                className="h-56 bg-transparent ml-36 rounded-full"
+                src={github}
                 alt="github logo"
               />
               <img
-                className="h-56  rounded-full absolute top-1/2 left-64 transform -translate-x-1/2 -translate-y-1/2 text- text-transparent"
+                className="h-48  rounded-full absolute top-1/2 left-64 transform -translate-x-1/2 -translate-y-1/2 text- text-transparent"
                 src={avatarTwo}
                 alt="user two image"
               />
@@ -205,21 +202,24 @@ function App() {
             <Button
               btnName="Compare"
               color="bg-blue-400"
-              border='border-blue-600'
+              border="border-blue-600"
               onClick={handleCompare}
             />
           </div>
-          {responseData != "" ? (
-            <div className='h-56 bg-white mx-32 p-4 text-md text-md mt-6 rounded-3xl text-black font-mono'>
-              {responseData}
-            </div>
-          ) :
-            <div className='h-56 bg-transparent mx-32 p-4 text-md rounded-3xl text-black font-mono'>
-            </div>
-          }
+          {responseData != '' ? (
+            <div className="fixed h-56 bg-white/50 mx-32 p-4 text-justify mt-6 rounded-3xl text-black font-mono overflow-auto">
+            <TypewriterEffectSmooth
+              words={responseData.split(' ').map((word) => ({ text: word }))}
+              className="text-blue-500 w-full"
+            />
+          </div>
+          
+          ) : (
+            <div className="h-56 bg-transparent mx-32 p-4 text-md rounded-3xl text-black font-mono"></div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
