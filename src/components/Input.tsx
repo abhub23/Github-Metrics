@@ -24,13 +24,18 @@ const Input: React.FC<InputFields> = ({ value, onChange }): JSX.Element => {
 };
 
 const StyledWrapper = styled.div`
-  .brutalist-container {
+   .brutalist-container {
     position: relative;
     width: 250px;
     font-family: monospace;
+
+    /* Responsive container for smaller viewports */
+    @media (max-width: 480px) {
+      width: 100px; /* Edited: make container responsive */
+    }
   }
 
-  .brutalist-input {
+ .brutalist-input {
     width: 80%;
     padding: 8px;
     font-size: 16px;
@@ -46,8 +51,19 @@ const StyledWrapper = styled.div`
     box-shadow:
       5px 5px 0 #000,
       10px 10px 0 #4a90e2;
-  }
 
+    /* Responsive input width */
+    @media (max-width: 480px) {
+      width: 100%; 
+      font-size: 10px;
+      border: 2px solid #000;
+      box-shadow:
+        3px 3px 0 #000,
+        6px 6px 0 #4a90e2;
+        padding: 4px;
+
+    }
+  }
   @keyframes glitch {
     0% {
       transform: translate(0);
@@ -135,7 +151,7 @@ const StyledWrapper = styled.div`
     }
   }
 
-  .brutalist-label {
+ .brutalist-label {
     position: absolute;
     left: 3px;
     top: -35px;
@@ -147,6 +163,14 @@ const StyledWrapper = styled.div`
     transform: rotate(-2deg);
     z-index: 1;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    /* Responsive label positioning */
+    @media (max-width: 480px) {
+      top: -20px; /* Edited: adjust spacing */
+      font-size: 6px; /* Edited: smaller label font */
+      padding: 3px 6px;
+
+    }
   }
 
   .brutalist-input:focus + .brutalist-label {
