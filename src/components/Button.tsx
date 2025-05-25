@@ -3,6 +3,7 @@ interface Proptype {
   color: string;
   onClick: () => Promise<void> | void;
   border?: string;
+  disabled?: boolean;
 }
 
 const Button: React.FC<Proptype> = ({
@@ -10,11 +11,13 @@ const Button: React.FC<Proptype> = ({
   color,
   onClick,
   border,
+  disabled 
 }): JSX.Element => {
   return (
     <button
       onClick={onClick}
-      className={`cursor-pointer transition-all ${color} font-mono text-xl w-26 h-12 text-white px-4 py-2 rounded-lg
+      disabled={disabled}
+      className={`cursor-pointer transition-all ${color} font-mono lg:text-[20px] text-[14px] lg:w-[104px] w-[90px] lg:h-[48px] h-[38px] text-white px-auto py-2 rounded-lg
         ${border} border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
         active:border-b-[2px] active:brightness-90 active:translate-y-[2px]`}
     >

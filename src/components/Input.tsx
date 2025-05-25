@@ -31,7 +31,7 @@ const StyledWrapper = styled.div`
 
     /* Responsive container for smaller viewports */
     @media (max-width: 480px) {
-      width: 100px; /* Edited: make container responsive */
+      width: 110px; /* Edited: make container responsive */
     }
   }
 
