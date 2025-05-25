@@ -3,9 +3,8 @@ import axios, { AxiosResponse } from 'axios';
 import github from './lib/github.png';
 import Button from './components/Button';
 import Input from './components/Input';
-import { Particles } from './components/magicui/particles';
-import { TypewriterEffectSmooth } from './components/ui/typewriter-effect';
 import sweetalert from './helpers/alert';
+import { motion } from 'motion/react';
 
 function App() {
   const [userOneName, setUserOneName] = useState<string>('');
@@ -17,6 +16,7 @@ function App() {
   const [responseData, setResponseData] = useState<string>('');
 
   const Github_API: string = import.meta.env.VITE_GITHUB_API_TOKEN;
+
 
   const handleUserOne = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserOneName(e.target.value);
@@ -129,12 +129,11 @@ function App() {
       let data1: string = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
       let data2: string = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
-        const result: any = await axios.post('http://localhost:3001/api',{
+        const result: any = await axios.post('http://192.168.0.105:3001/api', {
           data1, data2
-        } );
+        });
 
         const res = result.data
-        console.log(res)
         setResponseData(res);
       } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
@@ -148,45 +147,41 @@ function App() {
   };
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
-      <div className="absolute inset-0 -z-10">
-        <Particles />
-      </div>
-
+    <div className="relative lg:h-screen bg-white h-[688px] w-full overflow-hidden">
       <div className="relative z-10 p-4 bg-cover bg-center flex">
-        <div className="bg-transparent h-56 w-full">
-          <div className="h-56 bg-transparent flex justify-center items-center">
+        <div className="h-[200px] lg:h-[220px] w-[400px] lg:w-full">
+          <div className="lg:h-[224px] h-[220px] flex justify-center items-center">
             <div className="relative">
               <img
-                className="h-56 mr-36 rounded-full"
+                className="lg:h-[220px] h-[140px] lg:mr-[140px] mr-[20px] rounded-full"
                 src={github}
-                alt="github logo"
+                alt=""
               />
               <img
-                className="h-48 rounded-full absolute top-1/2 left-28 transform -translate-x-1/2 -translate-y-1/2 text-transparent"
+                className=" lg:h-[190px] h-[120px] rounded-full absolute top-1/2 lg:left-28 left-18 transform -translate-x-1/2 -translate-y-1/2 text-transparent"
                 src={avatarOne}
-                alt="user one image"
+                alt=""
               />
             </div>
 
             <div className="relative ">
               <img
-                className="h-56 bg-transparent ml-36 rounded-full"
+                className="lg:h-[220px] h-[140px] lg:ml-[140px] ml-[20px] rounded-full"
                 src={github}
-                alt="github logo"
+                alt=""
               />
               <img
-                className="h-48  rounded-full absolute top-1/2 left-64 transform -translate-x-1/2 -translate-y-1/2 text- text-transparent"
+                className="lg:h-[190px] h-[120px] rounded-full absolute top-1/2 lg:left-63 left-23 transform -translate-x-1/2 -translate-y-1/2 text- text-transparent"
                 src={avatarTwo}
-                alt="user two image"
+                alt=""
               />
             </div>
           </div>
-          <div className="bg-transparent gap-70 flex justify-around mx-90 pl-6 pr-8 mt-12 h-12">
+          <div className="bg-transparent lg:gap-[260px] gap-[60px] flex justify-center lg:mx-auto mx-auto lg:pl-[50px] pl-[24px] pr-8 lg:mt-[48px] mt-[10px] lg:h-[48px] h-[48px]">
             <Input value={userOneName} onChange={handleUserOne} />
             <Input value={userTwoName} onChange={handleUserTwo} />
           </div>
-          <div className="h-14 mt-4 gap-10 flex justify-center bg-transparent">
+          <div className="lg:h-[56px] h-[40px] lg:mt-[40px] lg:gap-10 gap-5 mx-auto flex justify-center">
             <Button
               btnName="Reset"
               color="bg-red-400"
@@ -204,18 +199,20 @@ function App() {
               color="bg-blue-400"
               border="border-blue-600"
               onClick={handleCompare}
+              disabled={responseData != '' ? true : false}
+
             />
           </div>
-          {responseData != '' ? (
-            <div className="fixed h-56 bg-white/50 mx-32 p-4 text-justify mt-6 rounded-3xl text-black font-mono overflow-auto">
-            <TypewriterEffectSmooth
-              words={responseData.split(' ').map((word) => ({ text: word }))}
-              className="text-blue-500 w-full"
-            />
-          </div>
-          
-          ) : (
-            <div className="h-56 bg-transparent mx-32 p-4 text-md rounded-3xl text-black font-mono"></div>
+          {responseData != '' && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="lg:h-56 h-[288px] mx-auto lg:w-[1400px] w-[320px] lg:p-4 lg:text-[16px] text-[13px] text-justify mt-6 text-black font-mono overflow-hidden"
+            >
+              {responseData}
+            </motion.div>
           )}
         </div>
       </div>
