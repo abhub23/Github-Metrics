@@ -129,7 +129,7 @@ function App() {
       let data1: string = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
       let data2: string = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
-        const result: any = await axios.post('http://192.168.0.105:3001/api', {
+        const result: any = await axios.post('https://githubstats-backend.vercel.app/api', {
           data1, data2
         });
 

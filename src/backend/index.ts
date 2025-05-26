@@ -17,6 +17,10 @@ app.use(cors({
 
 app.use(express.json())
 
+app.get('/', (req,res) => {
+  res.json({message: "Hello BOIIIIIIIII"})
+})
+
 app.post('/api', async (req: Request, res: any) => {
     const {data1, data2} = req.body
     console.log(data1, data2)
