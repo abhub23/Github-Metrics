@@ -5,6 +5,7 @@ import Button from './components/Button';
 import Input from './components/Input';
 import sweetalert from './helpers/alert';
 import { motion } from 'motion/react';
+import { useEnter } from './hooks/useEnter';
 
 function App() {
   const [userOneName, setUserOneName] = useState<string>('');
@@ -129,7 +130,7 @@ function App() {
       let data1: string = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
       let data2: string = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
-        const result: any = await axios.post('https://githubstats-backend.vercel.app/capi', {
+        const result: any = await axios.post('https://githubstats-backend.vercel.app/api', {
           data1, data2
         });
 
@@ -145,6 +146,8 @@ function App() {
       sweetalert();
     }
   };
+
+  const compareRef: any = useEnter(() => handleCompare)
 
   return (
     <div className="relative lg:h-screen bg-white h-[688px] w-full overflow-hidden">
@@ -200,6 +203,7 @@ function App() {
               border="border-blue-600"
               onClick={handleCompare}
               disabled={responseData != '' ? true : false}
+              ref={compareRef}
 
             />
           </div>
