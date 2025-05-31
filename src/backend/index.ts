@@ -17,6 +17,10 @@ app.use(cors({
 
 app.use(express.json())
 
+//server check
+app.get('/', (req, res)=> {
+  res.json({message: 'Server is alive'})
+})
 
 app.post('/api', async (req: Request, res: any) => {
     const {data1, data2} = req.body
