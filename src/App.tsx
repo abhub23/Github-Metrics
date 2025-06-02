@@ -150,13 +150,13 @@ function App() {
   const compareRef: any = useEnter(() => handleCompare)
 
   return (
-    <div className="relative lg:h-screen bg-white h-[688px] w-full overflow-hidden">
+    <div className="relative lg:h-screen h-[688px] w-full overflow-hidden">
       <div className="relative z-10 p-4 bg-cover bg-center flex">
         <div className="h-[200px] lg:h-[220px] w-[400px] lg:w-full">
           <div className="lg:h-[224px] h-[220px] flex justify-center items-center">
             <div className="relative">
               <img
-                className="lg:h-[220px] h-[140px] lg:mr-[140px] mr-[20px] rounded-full"
+                className="lg:h-[220px] h-[140px] lg:mr-[140px] mr-[20px] rounded-full backdrop-blur-2xl"
                 src={github}
                 alt=""
               />
@@ -180,7 +180,7 @@ function App() {
               />
             </div>
           </div>
-          <div className="bg-transparent lg:gap-[260px] gap-[60px] flex justify-center lg:mx-auto mx-auto lg:pl-[50px] pl-[24px] pr-8 lg:mt-[48px] mt-[10px] lg:h-[48px] h-[48px]">
+          <div className="bg-transparent lg:gap-[270px] gap-[60px] flex justify-center lg:mx-auto mx-auto lg:pl-[62px] pl-[24px] pr-8 lg:mt-[48px] mt-[10px] lg:h-[48px] h-[48px]">
             <Input value={userOneName} onChange={handleUserOne} />
             <Input value={userTwoName} onChange={handleUserTwo} />
           </div>
@@ -213,7 +213,7 @@ function App() {
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="lg:h-56 h-[288px] mx-auto lg:w-[1400px] w-[320px] lg:p-4 lg:text-[16px] text-[13px] text-justify mt-6 text-black font-mono overflow-hidden"
+              className="lg:h-56 h-[288px] mx-auto lg:w-[1400px] w-[320px] lg:p-4 lg:text-[16px] text-[13px] text-justify mt-6 text-black overflow-hidden"
             >
               {responseData}
             </motion.div>

@@ -26,40 +26,41 @@ const Input: React.FC<InputFields> = ({ value, onChange }): JSX.Element => {
 const StyledWrapper = styled.div`
    .brutalist-container {
     position: relative;
-    width: 250px;
-    font-family: monospace;
+    width: 230px;
 
-    /* Responsive container for smaller viewports */
     @media (max-width: 480px) {
-      width: 110px; /* Edited: make container responsive */
+      width: 110px; 
     }
   }
 
  .brutalist-input {
     width: 80%;
-    padding: 8px;
-    font-size: 16px;
-    font-weight: bold;
+    padding: 6px;
+    font-size: 14px;
+    font-weight: black;
     color: #000;
     background-color: #fff;
-    border: 4px solid #000;
+    border: 3px solid #000;
     position: relative;
     overflow: hidden;
     border-radius: 0;
+    letter-spacing: 1px;
     outline: none;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow:
-      5px 5px 0 #000,
-      10px 10px 0 #4a90e2;
+      3px 3px 0 #000,
+      6px 6px 0 #4a90e2;
 
     /* Responsive input width */
     @media (max-width: 480px) {
       width: 100%; 
+      height: 25px;
       font-size: 10px;
+      letter-spacing: 1px;
       border: 2px solid #000;
       box-shadow:
-        3px 3px 0 #000,
-        6px 6px 0 #4a90e2;
+        2px 2px 0 #000,
+        4px 4px 0 #4a90e2;
         padding: 4px;
 
     }
@@ -155,11 +156,11 @@ const StyledWrapper = styled.div`
     position: absolute;
     left: 3px;
     top: -35px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
     color: #fff;
     background-color: #000;
-    padding: 5px 10px;
+    padding: 4px 8px;
     transform: rotate(-2deg);
     z-index: 1;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
