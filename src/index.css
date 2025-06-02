@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body{
+  font-family: "Host Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
