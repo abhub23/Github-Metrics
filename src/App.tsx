@@ -6,6 +6,7 @@ import Input from './components/Input';
 import sweetalert from './helpers/alert';
 import { motion } from 'motion/react';
 import { useEnter } from './hooks/useEnter';
+import Loader from './components/Loader';
 
 function App() {
   const [userOneName, setUserOneName] = useState<string>('');
@@ -15,9 +16,9 @@ function App() {
   const [user1, setUser1] = useState<number[]>([]);
   const [user2, setUser2] = useState<number[]>([]);
   const [responseData, setResponseData] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const Github_API: string = import.meta.env.VITE_GITHUB_API_TOKEN;
-
 
   const handleUserOne = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserOneName(e.target.value);
@@ -126,15 +127,21 @@ function App() {
   }, [userTwoName]);
 
   const handleCompare = async (): Promise<void> => {
+    setLoading(true);
     if (userOneName && userTwoName) {
       let data1: string = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
       let data2: string = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
-        const result: any = await axios.post('https://githubstats-backend.vercel.app/api', {
-          data1, data2
-        });
+        const result: any = await axios.post(
+          'https://githubstats-backend.vercel.app/api',
+          {
+            data1,
+            data2,
+          }
+        );
 
-        const res = result.data
+        const res = result.data;
+        setLoading(false);
         setResponseData(res);
       } catch (err: unknown) {
         if (axios.isAxiosError(err)) {
@@ -147,7 +154,7 @@ function App() {
     }
   };
 
-  const compareRef: any = useEnter(() => handleCompare)
+  const compareRef: any = useEnter(() => handleCompare);
 
   return (
     <div className="relative lg:h-screen h-[688px] w-full overflow-hidden">
@@ -204,10 +211,13 @@ function App() {
               onClick={handleCompare}
               disabled={responseData != '' ? true : false}
               ref={compareRef}
-
             />
           </div>
-          {responseData != '' && (
+          {loading ? (
+            <div className='lg:pt-[50px] pt-[60px]'>
+              <Loader />
+            </div>
+          ) : (
             <motion.div
               initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
