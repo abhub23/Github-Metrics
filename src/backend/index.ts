@@ -8,7 +8,7 @@ import axios, {AxiosResponse} from 'axios';
 const PORT = 3001
 
   const Gemini_API = process.env.GEMINI_API_TOKEN;
-  const Gemini_API_URL: string = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${Gemini_API}`;
+  const Gemini_API_URL: string = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${Gemini_API}`;
 
 const app = express()
 app.use(cors({
