@@ -18,7 +18,7 @@ app.use(cors({
 app.use(express.json())
 
 //server check
-app.get('/', (req, res)=> {
+app.get('/', (_ , res)=> {
   res.json({message: 'Server is alive'})
 })
 
