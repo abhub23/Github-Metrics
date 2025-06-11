@@ -127,8 +127,8 @@ function App() {
   }, [userTwoName]);
 
   const handleCompare = async (): Promise<void> => {
-    setLoading(true);
     if (userOneName && userTwoName) {
+      setLoading(true);
       let data1: string = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
       let data2: string = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
