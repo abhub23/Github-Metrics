@@ -5,19 +5,18 @@ import cors from 'cors';
 import axios from 'axios';
 const PORT = 3001;
 const Gemini_API = process.env.GEMINI_API_TOKEN;
-const Gemini_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${Gemini_API}`;
+const Gemini_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${Gemini_API}`;
 const app = express();
 app.use(cors({
     origin: "*"
 }));
 app.use(express.json());
 //server check
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
     res.json({ message: 'Server is alive' });
 });
 app.post('/api', async (req, res) => {
     const { data1, data2 } = req.body;
-    console.log(data1, data2);
     try {
         const response = await axios.post(Gemini_API_URL, {
             contents: [
@@ -36,12 +35,13 @@ app.post('/api', async (req, res) => {
     }
     catch (err) {
         if (axios.isAxiosError(err)) {
-            console.error(`The error occured`, err.message);
+            console.error(`Error occured in Axios `, err.message);
         }
         console.error('Error occured in Gemini: ', err);
         return;
     }
 });
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`App listening on Port ${PORT}`);
-});
+if (process.env.VERCEL !== '1') {
+    app.listen(PORT, () => console.log(`Running locally on ${PORT}`));
+}
+export default app;
