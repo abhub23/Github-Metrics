@@ -202,6 +202,7 @@ function App() {
                 setAvatarOne('');
                 setAvatarTwo('');
                 setResponseData('');
+                setLoading(false)
               }}
             />
             <Button
