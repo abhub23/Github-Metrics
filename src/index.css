@@ -2,8 +2,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-body{
-  font-family: "Host Grotesk", sans-serif;
+body {
+  font-family: 'Host Grotesk', sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
 }

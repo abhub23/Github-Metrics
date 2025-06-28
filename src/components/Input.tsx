@@ -24,16 +24,16 @@ const Input: React.FC<InputFields> = ({ value, onChange }): JSX.Element => {
 };
 
 const StyledWrapper = styled.div`
-   .brutalist-container {
+  .brutalist-container {
     position: relative;
     width: 230px;
 
     @media (max-width: 480px) {
-      width: 110px; 
+      width: 110px;
     }
   }
 
- .brutalist-input {
+  .brutalist-input {
     width: 80%;
     padding: 6px;
     font-size: 14px;
@@ -53,7 +53,7 @@ const StyledWrapper = styled.div`
 
     /* Responsive input width */
     @media (max-width: 480px) {
-      width: 100%; 
+      width: 100%;
       height: 25px;
       font-size: 10px;
       letter-spacing: 1px;
@@ -61,8 +61,7 @@ const StyledWrapper = styled.div`
       box-shadow:
         2px 2px 0 #000,
         4px 4px 0 #4a90e2;
-        padding: 4px;
-
+      padding: 4px;
     }
   }
   @keyframes glitch {
@@ -152,7 +151,7 @@ const StyledWrapper = styled.div`
     }
   }
 
- .brutalist-label {
+  .brutalist-label {
     position: absolute;
     left: 3px;
     top: -35px;
@@ -170,7 +169,6 @@ const StyledWrapper = styled.div`
       top: -20px; /* Edited: adjust spacing */
       font-size: 6px; /* Edited: smaller label font */
       padding: 3px 6px;
-
     }
   }
 
