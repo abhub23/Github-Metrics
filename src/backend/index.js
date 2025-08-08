@@ -6,13 +6,16 @@ import axios from 'axios';
 const PORT = 3001;
 const Gemini_API = process.env.GEMINI_API_TOKEN;
 const Gemini_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${Gemini_API}`;
+
 const app = express();
+
 app.use(
   cors({
     origin: '*',
   })
 );
 app.use(express.json());
+
 //server check
 app.get('/', (_, res) => {
   res.json({ message: 'Server is alive' });
@@ -33,7 +36,7 @@ app.post('/api', async (req, res) => {
       ],
     });
     const result =
-      response.data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+    response.data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
     return res.status(200).send(result);
   } catch (err) {
     if (axios.isAxiosError(err)) {
