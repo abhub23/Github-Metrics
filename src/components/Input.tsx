@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 interface InputFields {
@@ -6,18 +6,18 @@ interface InputFields {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputFields> = ({ value, onChange }): JSX.Element => {
+const Input: FC<InputFields> = ({ value, onChange }) => {
   return (
     <StyledWrapper>
       <div className="brutalist-container">
         <input
-          placeholder="TYPE HERE"
+          placeholder="Type Here"
           className="brutalist-input smooth-type"
           type="text"
           value={value}
           onChange={onChange}
         />
-        <label className="brutalist-label">GITHUB USERNAME</label>
+        <label className="brutalist-label">Github Username</label>
       </div>
     </StyledWrapper>
   );
@@ -37,7 +37,6 @@ const StyledWrapper = styled.div`
     width: 80%;
     padding: 6px;
     font-size: 14px;
-    font-weight: black;
     color: #000;
     background-color: #fff;
     border: 3px solid #000;

@@ -9,7 +9,7 @@ interface Proptype {
 }
 
 const Button = forwardRef<HTMLButtonElement, Proptype>(
-  ({ btnName, color, onClick, border, disabled }, ref): JSX.Element => {
+  ({ btnName, color, onClick, border, disabled }, ref) => {
     return (
       <button
         ref={ref}

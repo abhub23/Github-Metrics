@@ -1,13 +1,13 @@
 'use client'
 
 import { motion, stagger, useAnimate } from 'motion/react';
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 
 type AnimateType = {
   text: string;
 };
 
-const AnimatedText: FC<AnimateType> = ({ text }) => {
+const AnimatedText = ({ text }: AnimateType) => {
   const [scope, animate] = useAnimate();
 
   const AnimateText = () => {
