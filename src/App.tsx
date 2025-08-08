@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import github from './lib/github.png';
 import Button from './components/Button';
 import Input from './components/Input';
 import sweetalert from './helpers/alert';
@@ -28,7 +27,7 @@ function App() {
     setUserTwoName(e.target.value);
   };
 
-  const userOne: Function = async (): Promise<void> => {
+  const userOne = async (): Promise<void> => {
     try {
       const obj1: AxiosResponse = await axios.get(
         `https://api.github.com/users/${userOneName}`,
@@ -68,7 +67,7 @@ function App() {
     }
   };
 
-  const userTwo: Function = async (): Promise<void> => {
+  const userTwo = async (): Promise<void> => {
     try {
       const obj2: AxiosResponse = await axios.get(
         `https://api.github.com/users/${userTwoName}`,
@@ -78,10 +77,10 @@ function App() {
           },
         }
       );
-      const res: string = obj2.data.avatar_url;
+      const res = obj2.data.avatar_url as string;
       setAvatarTwo(res);
 
-      const userData: object = {
+      const userData = {
         public_repos: obj2.data.public_repos,
         followers: obj2.data.followers,
         created: obj2.data.id,
@@ -127,12 +126,13 @@ function App() {
   }, [userTwoName]);
 
   const handleCompare = async (): Promise<void> => {
+
     if (userOneName && userTwoName) {
       setLoading(true);
-      let data1: string = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
-      let data2: string = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
+      let data1 = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
+      let data2 = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
-        const result: any = await axios.post(
+        const result = await axios.post(
           'https://githubstats-backend.vercel.app/api',
           {
             data1,
@@ -143,7 +143,7 @@ function App() {
         const res = result.data;
         setLoading(false);
         setResponseData(res);
-      } catch (err: unknown) {
+      } catch (err) {
         if (axios.isAxiosError(err)) {
           console.error(`The error occured`, err.message);
         }
@@ -154,85 +154,96 @@ function App() {
     }
   };
 
-  const compareRef: any = useEnter(() => handleCompare);
+  const compareRef = useEnter(() => handleCompare);
 
   return (
-    <div className="relative lg:h-screen h-[688px] w-full overflow-hidden">
-      <div className="relative z-10 p-4 bg-cover bg-center flex">
-        <div className="h-[200px] lg:h-[220px] w-[400px] lg:w-full">
-          <div className="lg:h-[224px] h-[220px] flex justify-center items-center">
-            <div className="relative">
-              <img
-                className="lg:h-[220px] h-[140px] lg:mr-[140px] mr-[20px] rounded-full backdrop-blur-2xl"
-                src={github}
-                alt=""
-              />
-              <img
-                className=" lg:h-[190px] h-[120px] rounded-full absolute top-1/2 lg:left-28 left-18 transform -translate-x-1/2 -translate-y-1/2 text-transparent"
-                src={avatarOne}
-                alt=""
-              />
-            </div>
+    <div className="min-h-screen w-full relative">
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      background: "radial-gradient(125% 125% at 50% 10%, #fff 40%, #6366f1 100%)",
+    }}
+  />
 
-            <div className="relative ">
-              <img
-                className="lg:h-[220px] h-[140px] lg:ml-[140px] ml-[20px] rounded-full"
-                src={github}
-                alt=""
-              />
-              <img
-                className="lg:h-[190px] h-[120px] rounded-full absolute top-1/2 lg:left-63 left-23 transform -translate-x-1/2 -translate-y-1/2 text- text-transparent"
-                src={avatarTwo}
-                alt=""
-              />
-            </div>
-          </div>
-          <div className="bg-transparent lg:gap-[270px] gap-[60px] flex justify-center lg:mx-auto mx-auto lg:pl-[62px] pl-[24px] pr-8 lg:mt-[48px] mt-[10px] lg:h-[48px] h-[48px]">
-            <Input value={userOneName} onChange={handleUserOne} />
-            <Input value={userTwoName} onChange={handleUserTwo} />
-          </div>
-          <div className="lg:h-[56px] h-[40px] lg:mt-[40px] lg:gap-10 gap-5 mx-auto flex justify-center">
-            <Button
-              btnName="Reset"
-              color="bg-red-400"
-              border="border-red-600"
-              onClick={() => {
-                setUserOneName('');
-                setUserTwoName('');
-                setAvatarOne('');
-                setAvatarTwo('');
-                setResponseData('');
-                setLoading(false)
-              }}
+  <div className="relative lg:h-screen h-[688px] w-full overflow-hidden">
+    <div className="relative z-10 p-4 bg-cover bg-center flex">
+      <div className="h-[200px] lg:h-[220px] w-[400px] lg:w-full">
+        <div className="lg:h-[224px] h-[220px] flex justify-center items-center">
+          <div className="relative">
+            <img
+              className="lg:h-[220px] h-[140px] lg:mr-[140px] mr-[20px] rounded-full backdrop-blur-2xl"
+              src='/github.png'
+              alt=""
             />
-            <Button
-              btnName="Compare"
-              color="bg-blue-400"
-              border="border-blue-600"
-              onClick={handleCompare}
-              disabled={responseData != '' ? true : false}
-              ref={compareRef}
+            <img
+              className=" lg:h-[190px] h-[120px] rounded-full absolute top-1/2 lg:left-28 left-18 transform -translate-x-1/2 -translate-y-1/2 text-transparent"
+              src={avatarOne}
+              alt=""
             />
           </div>
-          {loading ? (
-            <div className='lg:pt-[50px] pt-[60px]'>
-              <Loader />
-            </div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
-              className="lg:h-56 h-[288px] mx-auto lg:w-[1400px] w-[320px] lg:p-4 lg:text-[16px] text-[13px] text-justify mt-6 text-black overflow-hidden"
-            >
-              {responseData}
-            </motion.div>
-          )}
+
+          <div className="relative ">
+            <img
+              className="lg:h-[220px] h-[140px] lg:ml-[140px] ml-[20px] rounded-full"
+              src='/github.png'
+              alt=""
+            />
+            <img
+              className="lg:h-[190px] h-[120px] rounded-full absolute top-1/2 lg:left-63 left-23 transform -translate-x-1/2 -translate-y-1/2 text- text-transparent"
+              src={avatarTwo}
+              alt=""
+            />
+          </div>
         </div>
+        <div className="bg-transparent lg:gap-[270px] gap-[60px] flex justify-center lg:mx-auto mx-auto lg:pl-[62px] pl-[24px] pr-8 lg:mt-[48px] mt-[10px] lg:h-[48px] h-[48px]">
+          <Input value={userOneName} onChange={handleUserOne} />
+          <Input value={userTwoName} onChange={handleUserTwo} />
+        </div>
+        <div className="lg:h-[56px] h-[40px] lg:mt-[40px] lg:gap-10 gap-5 mx-auto flex justify-center">
+          <Button
+            btnName="Reset"
+            color="bg-red-400"
+            border="border-red-600"
+            onClick={() => {
+              setUserOneName('');
+              setUserTwoName('');
+              setAvatarOne('');
+              setAvatarTwo('');
+              setResponseData('');
+              setLoading(false)
+            }}
+          />
+          <Button
+            btnName="Compare"
+            color="bg-blue-400"
+            border="border-blue-600"
+            onClick={handleCompare}
+            disabled={responseData != '' ? true : false}
+            ref={compareRef}
+          />
+        </div>
+        {loading ? (
+          <div className='lg:pt-[50px] pt-[60px]'>
+            <Loader />
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            className="lg:h-56 h-[288px] mx-auto lg:w-[1400px] w-[320px] lg:p-4 lg:text-[16px] text-[13px] text-justify mt-6 text-black overflow-hidden"
+          >
+            {responseData}
+          </motion.div>
+        )}
       </div>
     </div>
+  </div>
+</div>
   );
 }
 
 export default App;
+
+
