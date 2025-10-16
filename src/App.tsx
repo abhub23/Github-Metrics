@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import Button from './components/Button';
 import Input from './components/Input';
-import sweetalert from './helpers/alert';
+import sweetAlert from './helpers/alert';
 import { motion } from 'motion/react';
 import { useEnter } from './hooks/useEnter';
 import Loader from './components/Loader';
@@ -129,8 +129,8 @@ function App() {
 
     if (userOneName && userTwoName) {
       setLoading(true);
-      let data1 = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
-      let data2 = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
+      const data1 = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
+      const data2 = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
       try {
         const result = await axios.post(
           'https://githubstats-backend.vercel.app/api',
@@ -145,12 +145,12 @@ function App() {
         setResponseData(res);
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          console.error(`The error occured`, err.message);
+          console.error(`The error occurred`, err.message);
         }
-        console.error('Error occured in API: ', err);
+        console.error('Error occurred in API: ', err);
       }
     } else {
-      sweetalert();
+      sweetAlert();
     }
   };
 
