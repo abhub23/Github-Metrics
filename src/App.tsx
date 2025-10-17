@@ -6,6 +6,7 @@ import sweetAlert from './helpers/alert';
 import { motion } from 'motion/react';
 import { useEnter } from './hooks/useEnter';
 import Loader from './components/Loader';
+import { prompt } from './helpers/prompt';
 
 function App() {
   const [userOneName, setUserOneName] = useState<string>('');
@@ -129,8 +130,8 @@ function App() {
 
     if (userOneName && userTwoName) {
       setLoading(true);
-      const data1 = `${userOneName} who have ${user1[0]} github repositories and have ${user1[1]} followers on github and ${userOneName}'s github id is ${user1[2]}`;
-      const data2 = `${userTwoName} who have ${user2[0]} github repositories and have ${user2[1]} followers on github and ${userTwoName}'s github id is ${user2[2]}`;
+      const data1 = prompt({username: userOneName, repo: user1[0], followers: user1[1], id: user1[2]});
+      const data2 = prompt({username: userTwoName, repo: user2[0], followers: user2[1], id: user2[2]});
       try {
         const result = await axios.post(
           'https://githubstats-backend.vercel.app/api',
