@@ -7,6 +7,7 @@ import axios, { AxiosResponse } from 'axios';
 
 const PORT = 3001;
 
+const GITHUB_API_TOKEN = process.env.GITHUB_API_TOKEN;
 const Gemini_API = process.env.GEMINI_API_TOKEN;
 const Gemini_API_URL: string = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${Gemini_API}`;
 
@@ -22,6 +23,30 @@ app.use(express.json());
 //server check
 app.get('/', (_, res) => {
   res.json({ message: 'Server is alive' });
+});
+
+app.get('/api/github/:username', async (req: Request, res: any) => {
+  const { username } = req.params;
+  try {
+    const response = await axios.get(`https://api.github.com/users/${username}`, {
+      headers: {
+        Authorization: `Bearer ${GITHUB_API_TOKEN}`,
+      },
+    });
+    return res.status(200).json({
+      avatar_url: response.data.avatar_url,
+      public_repos: response.data.public_repos,
+      followers: response.data.followers,
+      id: response.data.id,
+    });
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      console.error(`GitHub API Error: ${err.response?.status} - ${err.message}`);
+      return res.status(err.response?.status || 500).json({ error: err.message });
+    }
+    console.error('Unexpected Error:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 app.post('/api', async (req: Request, res: any) => {
