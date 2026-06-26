@@ -18,7 +18,7 @@ function App() {
   const [responseData, setResponseData] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const Github_API: string = import.meta.env.VITE_GITHUB_API_TOKEN;
+  const BACKEND_URL: string = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
   const handleUserOne = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserOneName(e.target.value);
@@ -31,12 +31,7 @@ function App() {
   const userOne = async (): Promise<void> => {
     try {
       const obj1: AxiosResponse = await axios.get(
-        `https://api.github.com/users/${userOneName}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Github_API}`,
-          },
-        }
+        `${BACKEND_URL}/api/github/${userOneName}`
       );
       const res: string = obj1.data.avatar_url;
       setAvatarOne(res);
@@ -71,12 +66,7 @@ function App() {
   const userTwo = async (): Promise<void> => {
     try {
       const obj2: AxiosResponse = await axios.get(
-        `https://api.github.com/users/${userTwoName}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Github_API}`,
-          },
-        }
+        `${BACKEND_URL}/api/github/${userTwoName}`
       );
       const res = obj2.data.avatar_url as string;
       setAvatarTwo(res);
