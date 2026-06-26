@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import Button from './components/Button';
 import Input from './components/Input';
 import sweetAlert from './helpers/alert';
@@ -20,100 +20,37 @@ function App() {
 
   const BACKEND_URL: string = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
-  const handleUserOne = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserOneName(e.target.value);
+  const handleUserChange = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (index === 0) setUserOneName(e.target.value);
+    else setUserTwoName(e.target.value);
   };
 
-  const handleUserTwo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserTwoName(e.target.value);
-  };
-
-  const userOne = async (): Promise<void> => {
+  const fetchUser = async (index: number): Promise<void> => {
+    const name = index === 0 ? userOneName : userTwoName;
+    const setAvatar = index === 0 ? setAvatarOne : setAvatarTwo;
+    const setStats = index === 0 ? setUser1 : setUser2;
+    if (!name) return;
     try {
-      const obj1: AxiosResponse = await axios.get(
-        `${BACKEND_URL}/api/github/${userOneName}`
-      );
-      const res: string = obj1.data.avatar_url;
-      setAvatarOne(res);
-
-      const userData: object = {
-        public_repos: obj1.data.public_repos,
-        followers: obj1.data.followers,
-        created: obj1.data.id,
-      };
-      /*
-      setUser1(Object.values(userData).map((value) => Number(value)));
-      console.log(user1); // ❌ Logs old state (React has not updated user1 yet) 
-      it schedules the re-render coz its asynchronous and dont do it immediately
-       */
-      setUser1((): number[] => {
-        const dataArr: number[] = Object.values(userData).map((value) =>
-          Number(value)
-        );
-        //console.log('User 1 data: ', dataArr); // ✅ Correct Updated Value
-        return dataArr;
-      });
+      const { data } = await axios.get(`${BACKEND_URL}/api/github/${name}`);
+      setAvatar(data.avatar_url);
+      setStats([data.public_repos, data.followers, data.id]);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error(`API Error: ${err.response?.status} - ${err.message}`);
-        console.error('Response Data:', err.response?.data);
       } else {
-        console.error('Unexpected Error for user 1:', err);
-      }
-    }
-  };
-
-  const userTwo = async (): Promise<void> => {
-    try {
-      const obj2: AxiosResponse = await axios.get(
-        `${BACKEND_URL}/api/github/${userTwoName}`
-      );
-      const res = obj2.data.avatar_url as string;
-      setAvatarTwo(res);
-
-      const userData = {
-        public_repos: obj2.data.public_repos,
-        followers: obj2.data.followers,
-        created: obj2.data.id,
-      };
-
-      setUser2((): number[] => {
-        const dataArr2: number[] = Object.values(userData).map((values) =>
-          Number(values)
-        );
-        //console.log('User 2 data: ', dataArr2);
-        return dataArr2;
-      });
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.error(`API Error: ${err.response?.status} - ${err.message}`);
-        console.error('Response Data:', err.response?.data);
-      } else {
-        console.error('Unexpected Error for user 2:', err);
+        console.error(`Unexpected Error for user ${index + 1}:`, err);
       }
     }
   };
 
   useEffect(() => {
-    if (!userOneName) return; // Don't fetch if inputs are empty
-    const delaySearch = setTimeout(() => {
-      userOne();
-    }, 500); // 500-ms delay after user stops typing
-
-    return () => {
-      clearTimeout(delaySearch); // Cleanup timeout on each change
-    };
+    const timer = setTimeout(() => fetchUser(0), 500);
+    return () => clearTimeout(timer);
   }, [userOneName]);
 
   useEffect(() => {
-    if (!userTwoName) return; // Don't fetch if inputs are empty
-    const delaySearch = setTimeout(() => {
-      userTwo();
-    }, 500); // 500-ms delay after user stops typing
-
-    return () => {
-      clearTimeout(delaySearch); // Cleanup timeout on each change
-    };
+    const timer = setTimeout(() => fetchUser(1), 500);
+    return () => clearTimeout(timer);
   }, [userTwoName]);
 
   const handleCompare = async (): Promise<void> => {
@@ -187,8 +124,8 @@ function App() {
           </div>
         </div>
         <div className="bg-transparent lg:gap-[270px] gap-[60px] flex justify-center lg:mx-auto mx-auto lg:pl-[62px] pl-[24px] pr-8 lg:mt-[48px] mt-[10px] lg:h-[48px] h-[48px]">
-          <Input value={userOneName} onChange={handleUserOne} />
-          <Input value={userTwoName} onChange={handleUserTwo} />
+          <Input value={userOneName} onChange={handleUserChange(0)} />
+          <Input value={userTwoName} onChange={handleUserChange(1)} />
         </div>
         <div className="lg:h-[56px] h-[40px] lg:mt-[40px] lg:gap-10 gap-5 mx-auto flex justify-center">
           <Button
@@ -209,7 +146,7 @@ function App() {
             color="bg-blue-400"
             border="border-blue-600"
             onClick={handleCompare}
-            disabled={responseData != '' ? true : false}
+            disabled={responseData !== ''}
             ref={compareRef}
           />
         </div>
