@@ -2,9 +2,9 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly: string; // Declare VITE_API as a string type
+  readonly VITE_BACKEND_URL: string;
 }
 
 interface ImportMeta {
-  readonly VITE_GITHUB_API_TOKEN: string;
+  readonly env: ImportMetaEnv;
 }
