@@ -61,7 +61,7 @@ function App() {
       const data2 = prompt({username: userTwoName, repo: user2[0], followers: user2[1], id: user2[2]});
       try {
         const result = await axios.post(
-          'https://githubstats-backend.vercel.app/api',
+          `${BACKEND_URL}/api`,
           {
             data1,
             data2,
